@@ -16,13 +16,23 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: 3.8  
+        python-version: 3.8  # Specify the desired Python version if needed
 
     - name: Install dependencies
       run: |
         pip install -r ./.github/requirements.txt
 
     - name: Run update script
-      run: python ./.github/update_readme.py
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        python ./.github/update_readme.py
+      # Ensure to save changes by using git commands
+      shell: bash
+      # This step saves changes to the README file
+      - |
+        git config --local user.name "GitHub Actions"
+        git config --local user.email "action@github.com"
+        git add ./README.md
+        git commit -m "Automated update of README.md"
+        git push origin main
