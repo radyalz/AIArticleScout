@@ -1,4 +1,4 @@
-name: Auto Update README
+name: Update README
 
 on:
   push:
@@ -10,21 +10,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
+    - name: Checkout code
       uses: actions/checkout@v2
 
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: 3.8  # Specify the desired Python version if needed
+        python-version: 3.8
 
-    - name: Install dependencies
-      run: |
-        pip install -r ./.github/requirements.txt
-
-    - name: Run update script
+    - name: Run Python script to update README
       env:
-        GITHUB_TOKEN: ${{ secrets.radyalz-airesearch-repo-auto-update-key }}  # Use the secret PAT
+        GITHUB_TOKEN: ${{ secrets.radyalz-airesearch-repo-auto-update-key }}
+        pythonLocation: /opt/hostedtoolcache/Python/3.8.18/x64
+        LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.8.18/x64/lib
       run: |
         python ./.github/update_readme.py
         git config --local user.name "GitHub Actions"
@@ -32,4 +30,3 @@ jobs:
         git add ./README.md
         git commit -m "Automated update of README.md"
         git push origin main
-      shell: bash
