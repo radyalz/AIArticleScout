@@ -15,10 +15,7 @@ jobs:
 
     - name: Update README
       run: |
-        # Check for new Markdown files in the 'websites' folder
-        NEW_RESOURCES=$(git diff --name-only HEAD~1 | grep '^websites/' | grep '.md$')
-
-        # If there are new files, update README.md
+        NEW_RESOURCES=$(git diff --name-only HEAD origin/main | grep '^websites/' | grep '.md$')
         if [ -n "$NEW_RESOURCES" ]; then
           echo "Updating README.md with new resources..."
           python update_readme.py
