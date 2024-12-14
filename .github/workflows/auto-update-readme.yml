@@ -1,26 +1,83 @@
-name: Update README
+name: Your Workflow Name
 
 on:
   push:
     branches:
-      - main
+      - main  # or any branch you want to trigger the action
 
 jobs:
-  update-readme:
+  build:
     runs-on: ubuntu-latest
+    
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
         with:
-          ssh-key: ${{ secrets.ACTIONS_SSH_PRIVATE_KEY }}  # The private SSH key from secrets
+          ssh-key: ${{-----BEGIN OPENSSH PRIVATE KEY-----
+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
+QCAqIkbitX3dkoAt3TOHTM+ig=
+-----END OPENSSH PRIVATE KEY-----
+}}  # Reference your private key here
 
-      - name: Run Python Script to Update README
+      - name: Setup SSH key
         run: |
-          python ./.github/update_readme.py
+          mkdir -p ~/.ssh
+          echo "${{ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDIx8pjCJLSWMObUd4iNvUpAYGkPOW2QoUbsJV1kcdVy/SJrLL5+t+kIIdEWyKbpq/h79qqD/Q1thq1L+CqEYX+XlRfh5LpZmaMKbZWo92h0O0ApvYnRi8TjqMEq0ivVgKAbsNuod2+NnQB+ji7+lfr68abVoM77ly7jseNnshMHT4foNAiWavRFScMoJpLjdF5kD3kJUNemWQmI4bQzTIOodxt/BANM9Yrektj3//dagIK1FrKG/LEz9u7hWg6SRktm9VqKOhE7RQjZQ8CvEJkamZO7clalBIPssUs8XRGjSDF6g/ytZsf+Bzt0bwKxe5dr8yZanPSmlblp6+0n8gkd0ex9Iq8O8PBy9M0nEA9QCIfOuJHqC7BM2wo8Lg3rYpglnE/wjKKrYQP1OZKkR5e0ZwqR8nu9jjv7/YD1kLCiu+vfY9ybYaGs5fXnTbYJATxUmiibBvZveRQBVZjLhUCqYarAsp/cTuxt7lDdP6SbQBeT0WdCoTrXH+69ms/VaQExZmgoFxlxygZEXe2CXRn29SyGIqj45hkJZA3oqXkbnsvyCJaDxWXsIBA8L7iN2LAEypIys86E4xq9SSHGdcYhxvl0PlybyLnxU2whmh9f3lYsLqTw7wc46kU4MhkDK7EZtlW1Kqcew9AcxMJiWQdcnsQ60DoRj48d4kSUJwdPw== github-actions-bot }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+        env:
+          ACTIONS_SSH_PRIVATE_KEY: ${{ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDIx8pjCJLSWMObUd4iNvUpAYGkPOW2QoUbsJV1kcdVy/SJrLL5+t+kIIdEWyKbpq/h79qqD/Q1thq1L+CqEYX+XlRfh5LpZmaMKbZWo92h0O0ApvYnRi8TjqMEq0ivVgKAbsNuod2+NnQB+ji7+lfr68abVoM77ly7jseNnshMHT4foNAiWavRFScMoJpLjdF5kD3kJUNemWQmI4bQzTIOodxt/BANM9Yrektj3//dagIK1FrKG/LEz9u7hWg6SRktm9VqKOhE7RQjZQ8CvEJkamZO7clalBIPssUs8XRGjSDF6g/ytZsf+Bzt0bwKxe5dr8yZanPSmlblp6+0n8gkd0ex9Iq8O8PBy9M0nEA9QCIfOuJHqC7BM2wo8Lg3rYpglnE/wjKKrYQP1OZKkR5e0ZwqR8nu9jjv7/YD1kLCiu+vfY9ybYaGs5fXnTbYJATxUmiibBvZveRQBVZjLhUCqYarAsp/cTuxt7lDdP6SbQBeT0WdCoTrXH+69ms/VaQExZmgoFxlxygZEXe2CXRn29SyGIqj45hkJZA3oqXkbnsvyCJaDxWXsIBA8L7iN2LAEypIys86E4xq9SSHGdcYhxvl0PlybyLnxU2whmh9f3lYsLqTw7wc46kU4MhkDK7EZtlW1Kqcew9AcxMJiWQdcnsQ60DoRj48d4kSUJwdPw== github-actions-bot }}
+
+      - name: Run your script or tasks
+        run: |
           git config --local user.name "GitHub Actions"
           git config --local user.email "action@github.com"
-          git add ./README.md
-          git commit -m "Automated update of README.md"
-          git push origin main  # This will now use SSH to push changes
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # This remains as is
+          git add .
+          git commit -m "Your commit message"
+          git push origin main  # Push the changes using SSH authentication
