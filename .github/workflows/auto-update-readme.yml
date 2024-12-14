@@ -1,4 +1,4 @@
-name: Update README
+name: Update README.md and Run Python Script
 
 on:
   push:
@@ -12,25 +12,30 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Configure Git
+      - name: Set up Python environment
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
         run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          pip install -r requirements.txt
 
-      - name: Check for changes in README.md
+      - name: Run update_readme.py script
+        run: python update_readme.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit changes to README.md
         run: |
-          if git diff --exit-code --quiet README.md; then
-            echo "No changes detected in README.md."
-            exit 0
-          else
-            git add README.md
-          fi
+          git config user.name "GitHub Actions"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "Update README.md with new content"
+        if: steps.update-readme.outputs.new-entries != '[]'
 
-      - name: Commit changes
-        run: git commit -m "Update README.md"
-        if: steps.check-changes.outputs.changes == 'true'
-
-      - name: Push changes
+      - name: Push changes to remote
         run: git push https://github.com/radyalz/AIArticleScout.git HEAD:main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: steps.update-readme.outputs.new-entries != '[]'
