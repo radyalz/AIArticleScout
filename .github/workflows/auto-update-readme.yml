@@ -15,12 +15,14 @@ jobs:
 
     - name: Update README
       run: |
-        NEW_RESOURCES=$(git diff --name-only HEAD origin/main | grep '^websites/' | grep '.md$')
-        if [ -n "$NEW_RESOURCES" ]; then
+        # Get the list of modified .md files under 'websites/'
+        NEW_RESOURCES=$(git diff --name-only HEAD origin/main | Select-String '^websites/.*\.md$')
+
+        if ($NEW_RESOURCES) {
           echo "Updating README.md with new resources..."
           python update_readme.py
-        else
+        } else {
           echo "No new resources to add to README.md."
-        fi
+        }
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
