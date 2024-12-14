@@ -4,7 +4,7 @@ import os
 # Path to the README.md file
 readme_path = 'README.md'
 
-# Path to the websites folder
+# Path to the 'websites' folder (relative to the script location)
 websites_path = 'websites'
 
 def get_new_entries():
