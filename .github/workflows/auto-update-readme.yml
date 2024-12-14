@@ -3,27 +3,33 @@ name: Update README
 on:
   push:
     branches:
-      - main
+      - main  # or another branch you want to trigger this on
 
 jobs:
   update-readme:
     runs-on: ubuntu-latest
+
     steps:
+      # Step 1: Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # Step 2: Run the Python script to update the README
       - name: Run the script to update README
         run: python ./.github/update_readme.py
 
-      - name: Configure Git
+      # Step 3: Configure Git with a bot user
+      - name: Set up Git configuration
         run: |
           git config --local user.name "GitHub Actions"
           git config --local user.email "action@github.com"
 
-      - name: Commit changes
+      # Step 4: Add the changes and commit
+      - name: Commit changes and push to main
         run: |
           git add ./README.md
           git commit -m "Automated update of README.md"
           git push origin main
         env:
+          # Pass the GitHub token to authenticate the push operation
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
