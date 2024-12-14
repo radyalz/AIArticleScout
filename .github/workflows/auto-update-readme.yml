@@ -24,7 +24,7 @@ jobs:
 
     - name: Run update script
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.PAT }}  # Use your PAT here
       run: |
         python ./.github/update_readme.py
         git config --local user.name "GitHub Actions"
