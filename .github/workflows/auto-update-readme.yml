@@ -35,7 +35,7 @@ jobs:
     - name: Push changes to repository
       run: |
         git push https://x-access-token:${{ secrets.GITHUB_PAT }}@github.com/radyalz/AIArticleScout.git HEAD:main
-      env:
+      env: 
         # Use GITHUB_TOKEN for pushing changes
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
