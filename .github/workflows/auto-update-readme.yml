@@ -27,12 +27,9 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         python ./.github/update_readme.py
-      # Ensure to save changes by using git commands
-      shell: bash
-      # This step saves changes to the README file
-      - |
         git config --local user.name "GitHub Actions"
         git config --local user.email "action@github.com"
         git add ./README.md
         git commit -m "Automated update of README.md"
         git push origin main
+      shell: bash
