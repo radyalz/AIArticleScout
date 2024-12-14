@@ -3,33 +3,24 @@ name: Update README
 on:
   push:
     branches:
-      - main  # or another branch you want to trigger this on
+      - main
 
 jobs:
   update-readme:
-    runs-on: ubuntu-latest  # This is fine for most setups, but if you need a specific runner (e.g., macOS or Windows), change this.
-    
+    runs-on: ubuntu-latest
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2  # This step checks out the repository code. No changes are needed here.
-      
-    - name: Set up SSH
-      run: |
-        mkdir -p ~/.ssh  # Create the .ssh directory if it doesn't exist
-        echo "${{ secrets.ACTIONS_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa  # Store your private SSH key in the file
-        chmod 600 ~/.ssh/id_rsa  # Set the correct permissions for the SSH key
-        ssh-keyscan github.com >> ~/.ssh/known_hosts  # Make sure github.com is trusted by SSH
-      # This will configure SSH to use the key from your GitHub secrets for authentication.
-      
-    - name: Run script to update README.md
-      run: python ./.github/update_readme.py  # Run your script to update the README, no changes needed here.
-    
-    - name: Commit changes and push
-      run: |
-        git config --local user.name "GitHub Actions"  # Set the user name for commits
-        git config --local user.email "action@github.com"  # Set the user email for commits
-        git add ./README.md  # Add the modified README file to the commit
-        git commit -m "Automated update of README.md"  # Commit the changes with a message
-        git push origin main  # Push the changes to the main branch
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use the GitHub token for authentication
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+        with:
+          ssh-key: ${{ secrets.ACTIONS_SSH_PRIVATE_KEY }}  # The private SSH key from secrets
+
+      - name: Run Python Script to Update README
+        run: |
+          python ./.github/update_readme.py
+          git config --local user.name "GitHub Actions"
+          git config --local user.email "action@github.com"
+          git add ./README.md
+          git commit -m "Automated update of README.md"
+          git push origin main  # This will now use SSH to push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # This remains as is
