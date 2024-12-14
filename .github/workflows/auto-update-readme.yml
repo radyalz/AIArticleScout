@@ -1,35 +1,33 @@
-name: Your Workflow Name
+name: Update README.md
 
 on:
   push:
     branches:
-      - main  # or any branch you want to trigger the action
+      - main
 
 jobs:
-  build:
+  update-readme:
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: Checkout the repository
+      - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}  # Use a secret for SSH key
+          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}  # SSH private key from secrets
 
-      - name: Setup SSH key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
-
-      - name: Run your script or tasks
+      - name: Setup Git configuration
         run: |
           git config --local user.name "GitHub Actions"
           git config --local user.email "action@github.com"
-          
-          # Check if there are changes
-          git diff --exit-code || echo "Changes detected"
-          
-          # Only commit if there are changes
-          git add .
-          git diff --cached --exit-code || (git commit -m "Your commit message" && git push origin main)
+
+      - name: Modify README.md
+        run: |
+          echo "Updated on $(date)" >> README.md  # Example modification
+
+      - name: Add changes
+        run: |
+          git add README.md  # Ensure the right file is added
+          git diff --cached --exit-code || (git commit -m "Update README.md" && git push origin main)
+
+      - name: Show Git status
+        run: git status
