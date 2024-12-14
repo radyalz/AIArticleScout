@@ -19,15 +19,16 @@ jobs:
 
       - name: Check for changes in README.md
         run: |
-          if ! git diff --quiet README.md; then
-            git add README.md
-          else
+          if git diff --exit-code --quiet README.md; then
             echo "No changes detected in README.md."
             exit 0
+          else
+            git add README.md
           fi
 
       - name: Commit changes
         run: git commit -m "Update README.md"
+        if: steps.check-changes.outputs.changes == 'true'
 
       - name: Push changes
         run: git push https://github.com/radyalz/AIArticleScout.git HEAD:main
