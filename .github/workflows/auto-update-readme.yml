@@ -17,8 +17,9 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Add README.md
-        run: git add README.md
+      - name: Check for changes in README.md
+        run: |
+          git diff --exit-code README.md || git add README.md
 
       - name: Commit changes
         run: git commit -m "Update README.md"
