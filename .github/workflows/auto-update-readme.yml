@@ -19,10 +19,11 @@ jobs:
 
       - name: Check for changes in README.md
         run: |
-          if git diff --exit-code README.md; then
-            echo "No changes detected in README.md."
-          else
+          if ! git diff --quiet README.md; then
             git add README.md
+          else
+            echo "No changes detected in README.md."
+            exit 0
           fi
 
       - name: Commit changes
