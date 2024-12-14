@@ -12,11 +12,13 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
+        with:
+          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}  # Use a secret for SSH key
 
       - name: Setup SSH key
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa  # Use the secret for SSH key
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan github.com >> ~/.ssh/known_hosts
 
@@ -24,6 +26,10 @@ jobs:
         run: |
           git config --local user.name "GitHub Actions"
           git config --local user.email "action@github.com"
+          
+          # Check if there are changes
+          git diff --exit-code || echo "Changes detected"
+          
+          # Only commit if there are changes
           git add .
-          git commit -m "Your commit message"
-          git push origin main  # Push the changes using SSH authentication
+          git diff --cached --exit-code || (git commit -m "Your commit message" && git push origin main)
