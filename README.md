@@ -83,4 +83,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 Together, let’s build an incredible resource library for the AI and web research community! 🌟
 
 
-## 📖 All updates of resource list
+## 📖 All updates of resource list## 📖 All updates of resource listUpdated on Sat Dec 14 23:50:40 UTC 2024
