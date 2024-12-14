@@ -1,3 +1,4 @@
+# pls donot change this
 name: Auto Update README
 
 on:
@@ -15,13 +16,6 @@ jobs:
 
     - name: Update README
       run: |
-        NEW_RESOURCES=$(git diff --name-only HEAD origin/main | grep '^websites/.*\.md$')
-        
-        if [ -n "$NEW_RESOURCES" ]; then
-          echo "Updating README.md with new resources..."
-          python update_readme.py
-        else
-          echo "No new resources to add to README.md."
-        fi
+        python scripts/update_readme.py  
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
