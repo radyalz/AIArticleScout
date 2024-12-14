@@ -24,7 +24,7 @@ jobs:
 
     - name: Run update script
       env:
-        GITHUB_TOKEN: ${{ secrets.PAT }}  # Use your PAT here
+        GITHUB_TOKEN: ${{ secrets.radyalz-airesearch-repo-auto-update-key }}  # Use the secret PAT
       run: |
         python ./.github/update_readme.py
         git config --local user.name "GitHub Actions"
