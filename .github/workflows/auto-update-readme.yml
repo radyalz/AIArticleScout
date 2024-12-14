@@ -1,19 +1,26 @@
-name: Auto Update README
+name: Update README
 
 on:
   push:
-    branches:
-      - main
+    paths:
+      - 'websites/**/*.md'  
 
 jobs:
   update-readme:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Update README
-      run: python .github/update_readme.py
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y python3-pip
+        shell: bash
+
+      - name: Run update script
+        run: |
+          pip install -r requirements.txt
+          python ./.github/update_readme.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

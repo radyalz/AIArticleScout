@@ -1,0 +1,2 @@
+# Required for file operations and reading/writing files
+requests
