@@ -20,7 +20,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install -r requirements.txt
+        pip install -r ./.github/requirements.txt
 
     - name: Run update script
       run: python ./.github/update_readme.py
