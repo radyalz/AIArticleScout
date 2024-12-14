@@ -1,45 +1,29 @@
-name: Update README.md
+name: Update README
 
 on:
   push:
     branches:
       - main
-  workflow_dispatch: # allows you to trigger this workflow manually if needed
 
 jobs:
   update-readme:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout the repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Set up Git
-      run: |
-        git config --local user.name "GitHub Actions"
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+      - name: Configure Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-    - name: Update README.md
-      run: |
-        # Ensure you're on the correct branch
-        git checkout main
-        # Make your desired changes to README.md here
-        # For example, appending the current date/time
-        echo "## 📖 All updates of resource listUpdated on $(date)" >> README.md
+      - name: Add README.md
+        run: git add README.md
 
-    - name: Commit changes
-      run: |
-        git add README.md
-        git commit -m "Update README.md with update timestamp" || echo "No changes to commit"
+      - name: Commit changes
+        run: git commit -m "Update README.md"
 
-    - name: Push changes to repository
-      run: |
-        git push https://x-access-token:${{ secrets.GITHUB_PAT }}@github.com/radyalz/AIArticleScout.git HEAD:main
-      env: 
-        # Use GITHUB_TOKEN for pushing changes
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    # Optional step if you prefer to use Personal Access Token (PAT) instead of GITHUB_TOKEN
-    # - name: Push changes using Personal Access Token (PAT)
-    #   run: |
-    #     git push https://x-access-token:${{ secrets.GITHUB_PAT }}@github.com/radyalz/AIArticleScout.git HEAD:main
+      - name: Push changes
+        run: git push https://github.com/radyalz/AIArticleScout.git HEAD:main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
