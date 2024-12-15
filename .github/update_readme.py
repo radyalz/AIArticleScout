@@ -1,5 +1,6 @@
 import os
 import subprocess
+from datetime import datetime
 
 # Path to the README.md file
 readme_path = './README.md'
@@ -52,8 +53,8 @@ def update_readme():
 
     if new_entries:
         try:
-            with open(readme_path, 'a+', encoding='utf-8') as readme_file:
-                readme_content = readme_file.read()  # Read current content to check for duplicates
+            with open(readme_path, 'r+', encoding='utf-8') as readme_file:
+                readme_content = readme_file.read()  # Read current content
                 entry_number = 1  # Initialize the entry numbering
                 for file_path, entry in new_entries:
                     # Ensure the entry does not already exist in the README
@@ -62,6 +63,14 @@ def update_readme():
                         numbered_entry = f"## #{entry_number}\n{entry}\n**Contributor:** {author}\n"
                         readme_file.write(f"\n---\n{numbered_entry}\n")
                         entry_number += 1  # Increment the entry number
+                
+                # Replace the placeholder with the current date
+                current_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                readme_file.seek(0)  # Move to the start of the file
+                updated_content = readme_file.read().replace("{{ update_date }}", f"Last Updated: {current_date}")
+                readme_file.seek(0)
+                readme_file.write(updated_content)
+                readme_file.truncate()
         except Exception as e:
             print(f"Error writing to {readme_path}: {e}")
 
