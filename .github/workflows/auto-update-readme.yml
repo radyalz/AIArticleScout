@@ -18,11 +18,10 @@ jobs:
           python-version: '3.x'
 
       - name: Install dependencies
-        run: |
-          pip install -r ./requirements.txt
+        run: pip install -r ./.github/requirements.txt
 
       - name: Run update_readme.py script
-        run: python update_readme.py
+        run: python ./.github/update_readme.py
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
