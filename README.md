@@ -84,3 +84,33 @@ Together, let’s build an incredible resource library for the AI and web resear
 
 
 ## 📖 All updates of resource list## 📖 All updates of resource listUpdated on Sat Dec 14 23:50:40 UTC 2024
+
+---
+## #1
+## [🌟 Example Website](https://example.com)
+
+**Description:** A brief description of the website.
+
+![Website Screenshot](relative/path/to/image.png)
+
+**Category:** AI Research / Journals / Articles
+
+**Tags:** #AI, #WebResearch, #Journals
+
+**Contributor:** Radman alizadeh
+
+
+---
+## #2
+## [🌟 connectedpapers](https://www.connectedpapers.com/search?q=5g)  
+
+**Description:** A brief description of the website.  
+
+![Website Screenshot](relative/path/to/image.png)  
+
+**Category:** AI Research / Journals / Articles  /asdasdasdasd
+
+**Tags:** #AI, #WebResearch, #Journals  
+
+**Contributor:** Radman alizadeh
+
