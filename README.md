@@ -110,8 +110,11 @@ Its adaptability and depth of knowledge make it an indispensable assistant in bo
 ChatGPT AI offers a unique blend of intelligence and efficiency, making it a powerful resource for various needs. However, users are encouraged to validate its responses and leverage its strengths while being mindful of its limitations.
 
 **Category:** AI Research / Journals / Articles / LLM Modal
+
 **Tags:** #AI, #WebResearch, #Journals , #LLM_Modal
+
 **Contributor:** Radman alizadeh
+
 ---
 
 ## 📜 License  
