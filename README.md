@@ -142,3 +142,18 @@ Together, let’s build an incredible resource library for the AI and web resear
 
 **Contributor:** Radman alizadeh
 
+
+---
+## #1
+## [🌟 connectedpapers](https://www.connectedpapers.com/search?q=5g)  
+
+**Description:** A brief description of the website.  
+
+![Website Screenshot](relative/path/to/image.png)  
+
+**Category:** AI Research / Journals / Articles  /asdasdasdasd /asdasdasd /asdasdas
+
+**Tags:** #AI, #WebResearch, #Journals  
+
+**Contributor:** Radman alizadeh
+
