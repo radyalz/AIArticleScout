@@ -4,6 +4,6 @@
 
 ![Website Screenshot](relative/path/to/image.png)  
 
-**Category:** AI Research / Journals / Articles  /asdasdasdasd /asdasdasd
+**Category:** AI Research / Journals / Articles  /asdasdasdasd /asdasdasd /asdasdas
 
 **Tags:** #AI, #WebResearch, #Journals  
