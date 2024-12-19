@@ -71,7 +71,6 @@ git push origin main
 
 ### Example Entry:  
 ---
-## #1
 ## [🤖 ChatGPT AI](https://openai.com/chatgpt)
 
 **Description:**  
