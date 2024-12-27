@@ -1,0 +1,45 @@
+{
+    "website": "Website Name",
+    "link": "https://example.com",
+    "Description": "A brief description of the website.",
+    "image": "image.png",
+    "attributes": {
+        "pros": [
+            "pro 1",
+            "pro 2",
+            "pro 3"
+        ],
+        "cons": [
+            "con 1",
+            "con 2",
+            "con 3"
+        ]
+    },
+    "videos": [
+        {
+            "title": "Click to View Video",
+            "thumbnail": "thumbnail.gif",
+            "link": "https://www.example.com/v/your-video-id",
+            "Description": "A brief description of the video."
+        },
+        {
+            "title": "Click to View Video",
+            "thumbnail": "thumbnail.gif",
+            "link": "https://www.example.com/v/your-video-id",
+            "Description": "A brief description of the video."
+        }
+    ],
+    "Category": [
+        "different",
+        "based on",
+        "your preferences"
+    ],
+    "Tags": [
+        "different",
+        "based on",
+        "your preferences"
+    ],
+    "Contributor": "radyalz",
+    "show": true,
+    "example": true
+}

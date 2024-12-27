@@ -1,170 +1,141 @@
 import os
+import subprocess
 import json
 from datetime import datetime
 
-# Paths (relative to this script)
-BASE_DIR = os.path.dirname(__file__)
-README_PATH = os.path.join(BASE_DIR, '..', 'README.md')
-CONFIG_PATH = os.path.join(BASE_DIR, 'config.json')
-WEBSITES_PATH = os.path.join(BASE_DIR, '..', 'websites')
-
-
-def load_config():
-    """Load contributor tags and full names from config.json."""
-    try:
-        with open(CONFIG_PATH, 'r', encoding='utf-8') as file:
-            config = json.load(file)
-            return config.get("contributors", {})  # Default to an empty dict if missing
-    except Exception as e:
-        print(f"Error loading config: {e}")
-        return {}
-
-
-def parse_metadata(content):
-    """Parse metadata from markdown content."""
-    metadata = {
-        "title": "",
-        "description": "",
-        "pros": [],
-        "cons": [],
-        "category": "Uncategorized",
-        "tags": "No tags",
-        "contributor": "Unknown Contributor",
-        "image": "",
-        "tutorial_videos": []
-    }
-    lines = content.splitlines()
-
-    # Extract metadata
-    for i, line in enumerate(lines):
-        if line.startswith("## "):
-            metadata['title'] = line.replace("## ", "").strip()
-        elif line.startswith("**Description:"):
-            metadata['description'] = lines[i + 1].strip() if i + 1 < len(lines) else ""
-        elif line.startswith("![Website Screenshot]") or line.startswith("![Image]"):
-            metadata['image'] = extract_image(line)
-        elif line.startswith("### **Pros:**"):
-            metadata['pros'] = extract_list(lines, i + 1)
-        elif line.startswith("### **Cons:**"):
-            metadata['cons'] = extract_list(lines, i + 1)
-        elif line.startswith("## Tutorial Videos"):
-            metadata['tutorial_videos'] = extract_videos(lines, i + 1)
-        elif line.startswith("**Category:"):
-            metadata['category'] = line.split(":")[1].strip()
-        elif line.startswith("**Tags:"):
-            metadata['tags'] = line.split(":")[1].strip()
-        elif line.startswith("**Contributor:"):
-            metadata['contributor'] = line.split(":")[1].strip()
-
-    return metadata
-
-
-def extract_list(lines, start_index):
-    """Extract a list of bullet points."""
-    items = []
-    for line in lines[start_index:]:
-        if line.startswith("- "):
-            items.append(line.replace("- ", "").strip())
-        elif line.strip() == "":
-            break  # Stop at blank line
-    return items
-
-
-def extract_videos(lines, start_index):
-    """Extract tutorial videos from the markdown content."""
-    videos = []
-    for line in lines[start_index:]:
-        if "![](gifs/" in line:
-            link = extract_image(line)
-            videos.append(link)
-        elif line.strip() == "":
-            break  # Stop at blank line
-    return videos
-
-
-def extract_image(line):
-    """Extract image or video path from markdown syntax."""
-    if "![" in line and "](" in line:
-        return line.split("(")[1].split(")")[0]
-    return ""
-
-
-def get_new_entries(contributor_tags):
-    """Find new markdown files to process."""
-    entries = []
-    readme_content = get_readme_content()
-
-    for root, _, files in os.walk(WEBSITES_PATH):
-        for file in files:
-            if file.endswith('.md'):
-                file_path = os.path.join(root, file)
-                relative_path = os.path.relpath(file_path, os.path.dirname(README_PATH))
-
-                try:
-                    with open(file_path, 'r', encoding='utf-8') as f:
-                        content = f.read()
-                        if content not in readme_content:  # Only process new entries
-                            metadata = parse_metadata(content)
-                            metadata['contributor'] = contributor_tags.get(metadata['contributor'], metadata['contributor'])
-                            metadata['path'] = relative_path
-                            entries.append(metadata)
-                except Exception as e:
-                    print(f"Error reading {file_path}: {e}")
-    return entries
-
+# Paths to the necessary files and directories
+readme_path = '../README.md'  # Adjusted path to README.md
+websites_path = '../websites'  # Adjusted path to websites folder containing JSON files
+images_path = '../images'  # Folder where images are stored
+gifs_path = '../gifs'  # Folder where GIFs are stored
+config_path = './config.json'  # config.json is in the same folder as the script
 
 def get_readme_content():
-    """Read the current README content."""
     try:
-        with open(README_PATH, 'r', encoding='utf-8') as file:
-            return file.read()
+        with open(readme_path, 'r', encoding='utf-8') as f:
+            return f.read()
     except Exception as e:
-        print(f"Error reading README.md: {e}")
+        print(f"Error reading {readme_path}: {e}")
         return ""
 
+def get_config():
+    try:
+        with open(config_path, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except Exception as e:
+        print(f"Error reading {config_path}: {e}")
+        return {}
+
+def get_new_entries():
+    readme_content = get_readme_content()  # Read the current README.md content
+    new_entries = []
+    for root, dirs, files in os.walk(websites_path):
+        for file in files:
+            if file.endswith('.json'):
+                file_path = os.path.join(root, file)
+                try:
+                    with open(file_path, 'r', encoding='utf-8') as f:
+                        website_data = json.load(f)
+                        # Check if the entry should be included (show is true or not set)
+                        if website_data.get('show', True):
+                            # Check if the entry is not already in README
+                            if file_path not in readme_content:
+                                new_entries.append((file_path, website_data))
+                except Exception as e:
+                    print(f"Error reading {file_path}: {e}")
+    return new_entries
+
+def get_commit_author(file_path):
+    # Extract the last commit's author for the given file
+    try:
+        result = subprocess.run(
+            ['git', 'log', '-1', '--format=%an', '--', file_path],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=True,
+            text=True
+        )
+        return result.stdout.strip()
+    except subprocess.CalledProcessError as e:
+        print(f"Error getting commit author for {file_path}: {e}")
+        return "Unknown Contributor"
 
 def update_readme():
-    """Update README.md with new entries."""
-    # Load contributors
-    contributor_tags = load_config()
-    entries = get_new_entries(contributor_tags)
+    config = get_config()
+    new_entries = get_new_entries()
 
-    if entries:
+    if new_entries:
         try:
-            with open(README_PATH, 'a', encoding='utf-8') as readme_file:
+            with open(readme_path, 'r+', encoding='utf-8') as readme_file:
+                readme_content = readme_file.read()  # Read current content
+                entry_number = 1  # Initialize the entry numbering
+                for file_path, website_data in new_entries:
+                    # Ensure the entry does not already exist in the README
+                    if file_path not in readme_content:
+                        author = get_commit_author(file_path)
+
+                        # Prepare entry title
+                        entry_title = f"## {entry_number}️⃣"
+
+                        # Prepare website link
+                        entry_link = f"[{website_data['website']}]({website_data['link']})"
+                        
+                        # Add Description
+                        content = f"**Description:** 📝 {website_data['Description']}\n\n"
+                        
+                        # Prepare image path (assuming images are in the ../images directory)
+                        image_filename = website_data.get("image", "")
+                        image_path = os.path.join(images_path, image_filename)
+                        if os.path.exists(image_path):
+                            content += f"![Website Screenshot]({image_path})\n\n"
+                        
+                        # Prepare GIF path (assuming gifs are in the ../gifs directory)
+                        gif_filename = website_data.get("gif", "")
+                        gif_path = os.path.join(gifs_path, gif_filename)
+                        if os.path.exists(gif_path):
+                            content += f"![GIF Tutorial]({gif_path})\n\n"
+
+                        # Add Pros and Cons with emojis
+                        if website_data.get("attributes", {}).get("pros"):
+                            content += "#### 🌟 Pros:\n"
+                            for pro in website_data["attributes"]["pros"]:
+                                content += f"- ✅ **{pro}:** Add pros as bullet points here\n"  # Emoji and description
+
+                        if website_data.get("attributes", {}).get("cons"):
+                            content += "#### ❌ Cons:\n"
+                            for con in website_data["attributes"]["cons"]:
+                                content += f"- 🚫 **{con}:** Add cons as bullet points here\n"  # Emoji and description
+
+                        # Add Video Section
+                        content += "\n### 🎥 Tutorial Videos\n"
+                        for video in website_data.get("videos", []):
+                            content += f"#### 📹 {video['title']}:\n"
+                            content += f"**Description:** 🎬 {video['Description']}\n"
+                            content += f"[![Click to View Video]({video['thumbnail']})]({video['link']})\n"
+                            content += "---\n"
+                        
+                        # Add Category and Tags
+                        content += f"\n**🔖 Category:** {', '.join(website_data.get('Category', []))}\n"
+                        content += f"**🏷️ Tags:** {', '.join(website_data.get('Tags', []))}\n"
+                        content += f"**🤝 Contributor:** 🎤 {config.get('contributors', {}).get(website_data.get('Contributor'), website_data.get('Contributor'))}\n"
+
+                        # Full Example JSON Code Block
+                        content += f"\n```json\n{json.dumps(website_data, indent=2)}\n```\n"
+
+                        # Add entry to the README
+                        numbered_entry = f"{entry_title} {entry_link}\n{content}\n**Contributor:** {author}\n"
+                        readme_file.write(f"\n---\n{numbered_entry}\n")
+                        entry_number += 1  # Increment the entry number
+
+                # Replace the placeholder with the current date
                 current_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-
-                for entry in entries:
-                    section = f"### {entry['title']}\n---\n"
-                    section += f"## [{entry['title']}]({entry['path']})\n\n"
-                    section += f"**Description:**  \n{entry['description']}\n\n"
-
-                    if entry['image']:
-                        section += f"![Website Screenshot]({entry['image']})\n\n"
-
-                    section += "### Pros and Cons\n\n#### **Pros:**\n"
-                    for pro in entry['pros']:
-                        section += f"- {pro}\n"
-
-                    section += "\n#### **Cons:**\n"
-                    for con in entry['cons']:
-                        section += f"- {con}\n"
-
-                    if entry['tutorial_videos']:
-                        section += "\n---\n## Tutorial Videos\n"
-                        for video in entry['tutorial_videos']:
-                            section += f"[![Click to View Video]({video})]({video})\n\n"
-
-                    section += "---\n"
-                    section += f"**Category:** {entry['category']}\n"
-                    section += f"**Tags:** {entry['tags']}\n"
-                    section += f"**Contributor:** {entry['contributor']}\n\n"
-
-                    readme_file.write(section)
-
+                readme_file.seek(0)  # Move to the start of the file
+                updated_content = readme_file.read().replace("{{ update_date }}", f"Last Updated: {current_date}")
+                readme_file.seek(0)
+                readme_file.write(updated_content)
+                readme_file.truncate()
         except Exception as e:
-            print(f"Error updating README.md: {e}")
-
+            print(f"Error writing to {readme_path}: {e}")
 
 if __name__ == "__main__":
     update_readme()
