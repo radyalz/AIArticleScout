@@ -28,44 +28,13 @@ git clone https://github.com/your-username/AIArticleScout.git
 ```  
 
 ### 3⃣ Add a New Website  
-📄 Navigate to the `websites` folder and create a new Markdown file (`resource-name.md`). Use this template:  
-```markdown  
-## [🌟 Website Name](https://example.com)  
-
-**Description:** A brief description of the website.  
-
-![Website Screenshot](relative/path/to/image.png)  
-- put the image on the images folder and name the title above as (./images/your image name)
-
-### Pros and Cons of Said Website
-
-#### **Pros:**  
-- **pro:** What do you believe this app can do better than its competitors in the market?.  
-
-#### **Cons:**  
-- **con:** What do you believe this app can not do better than its competitors in the market?.  
-
----
-
-## Tutorial Videos
-
-A link to your own tutorial video.
-
-For example:
-
-[![Click to View Video](gifs/example-thumbnail.jpg)](https://www.youtube.com/watch?v=your-video-id)  
-Or, watch it on Aparat:  
-[![Click to View Video](gifs/example-thumbnail.jpg)](https://www.aparat.com/v/your-video-id)
-
----
-
-**Category:** different / based on / your preferences  
-**Tags:** #different, #based_on, #your_preferences  
-**Contributor:** your name here 
-```  
-
-### 4⃣ Add an Image  
-🖼️ Place a screenshot or logo of the website in the `images` folder. Ensure the filename matches the reference in your Markdown file.  
+📄 Navigate to the `websites` folder and create a new Json file (`resource-name.json`). Use this template:  
+```
+```
+### 4⃣ Add an Image or gifs
+for images or gifs just place names in the json file with the correct annotation
+🖼️ Place a screenshot or logo of the website in the `images` folder. Ensure the filename matches the reference in your json file.  
+🎬 Place a gif file of the website in the `gifs` folder. Ensure the filename matches the reference in your json file. 
 
 ### 5⃣ Commit and Push Your Changes  
 💾 Save your changes:  
@@ -96,81 +65,3 @@ Together, let’s build an incredible resource library for the AI and web resear
 ---
 
 ## 📖 All updates of resource list## 
-
----
-## 1️⃣ [Website Name](https://example.com)
-**Description:** 📝 A brief description of the website.
-
-![GIF Tutorial](../gifs\)
-
-#### 🌟 Pros:
-- ✅ **pro 1:** Add pros as bullet points here
-- ✅ **pro 2:** Add pros as bullet points here
-- ✅ **pro 3:** Add pros as bullet points here
-#### ❌ Cons:
-- 🚫 **con 1:** Add cons as bullet points here
-- 🚫 **con 2:** Add cons as bullet points here
-
-### 🎥 Tutorial Videos
-#### 📹 Click to View Video:
-**Description:** 🎬 A brief description of the video.
-[![Click to View Video](thumbnail.gif)](https://www.example.com/v/your-video-id)
----
-#### 📹 Click to View Video:
-**Description:** 🎬 A brief description of the video.
-[![Click to View Video](thumbnail.gif)](https://www.example.com/v/your-video-id)
----
-
-**🔖 Category:** different, based on, your preferences
-**🏷️ Tags:** different, based on, your preferences
-**🤝 Contributor:** 🎤 Radman Alizadeh
-
-```json
-{
-  "website": "Website Name",
-  "link": "https://example.com",
-  "Description": "A brief description of the website.",
-  "image": "image.png",
-  "attributes": {
-    "pros": [
-      "pro 1",
-      "pro 2",
-      "pro 3"
-    ],
-    "cons": [
-      "con 1",
-      "con 2"
-    ]
-  },
-  "videos": [
-    {
-      "title": "Click to View Video",
-      "thumbnail": "thumbnail.gif",
-      "link": "https://www.example.com/v/your-video-id",
-      "Description": "A brief description of the video."
-    },
-    {
-      "title": "Click to View Video",
-      "thumbnail": "thumbnail.gif",
-      "link": "https://www.example.com/v/your-video-id",
-      "Description": "A brief description of the video."
-    }
-  ],
-  "Category": [
-    "different",
-    "based on",
-    "your preferences"
-  ],
-  "Tags": [
-    "different",
-    "based on",
-    "your preferences"
-  ],
-  "Contributor": "radyalz",
-  "show": true,
-  "example": true
-}
-```
-
-**Contributor:** Radman alizadeh
-

@@ -60,7 +60,7 @@ def get_commit_author(file_path):
         return result.stdout.strip()
     except subprocess.CalledProcessError as e:
         print(f"Error getting commit author for {file_path}: {e}")
-        return "Unknown Contributor"
+        return "Anonymous"
 
 def update_readme():
     config = get_config()
