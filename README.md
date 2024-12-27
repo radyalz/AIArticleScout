@@ -37,13 +37,26 @@ git clone https://github.com/your-username/AIArticleScout.git
 ![Website Screenshot](relative/path/to/image.png)  
 - put the image on the images folder and name the title above as (./images/your image name)
 
-### Pros and Cons of Using ChatGPT AI  
+### Pros and Cons of Said Website
 
 #### **Pros:**  
 - **pro:** What do you believe this app can do better than its competitors in the market?.  
 
 #### **Cons:**  
 - **con:** What do you believe this app can not do better than its competitors in the market?.  
+
+---
+
+## Tutorial Videos
+
+A link to your own tutorial video.
+
+For example:
+
+[![Click to View Video](gifs/example-thumbnail.jpg)](https://www.youtube.com/watch?v=your-video-id)  
+Or, watch it on Aparat:  
+[![Click to View Video](gifs/example-thumbnail.jpg)](https://www.aparat.com/v/your-video-id)
+
 ---
 
 **Category:** different / based on / your preferences  
@@ -112,7 +125,7 @@ ChatGPT AI offers a unique blend of intelligence and efficiency, making it a pow
 
 **Tags:** #AI, #WebResearch, #Journals , #LLM_Modal
 
-**Contributor:** Radman alizadeh
+**Contributor:** Radman Alizadeh
 
 ---
 
@@ -129,16 +142,10 @@ Together, let’s build an incredible resource library for the AI and web resear
 ## 📖 All updates of resource list## 
 
 ---
-## #1
-## [🌟 connectedpapers](https://www.connectedpapers.com/search?q=5g)  
+### Contributions by Unknown Contributor
 
-**Description:** A brief description of the website.  
-
-![Website Screenshot](relative/path/to/image.png)  
-
-**Category:** AI Research / Journals / Articles  /asdasdasdasd /asdasdasd
-
-**Tags:** #AI, #WebResearch, #Journals  
-
-**Contributor:** Radman alizadeh
+- **[## [🌟 Website Name](https://example.com)  ](websites\example.md)**  
+  **Category:** ** different / based on / your preferences  
+  **Tags:** ** #different, #based_on, #your_preferences  
+  **Path:** websites\example.md  
 
