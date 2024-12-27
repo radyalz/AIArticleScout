@@ -36,8 +36,10 @@ def get_new_entries():
                 try:
                     with open(file_path, 'r', encoding='utf-8') as f:
                         website_data = json.load(f)
+                        
                         # Check if the entry should be included (show is true or not set)
                         if website_data.get('show', True):
+                            
                             # Check if the entry is not already in README
                             if file_path not in readme_content:
                                 new_entries.append((file_path, website_data))
@@ -122,10 +124,11 @@ def update_readme():
                         # Full Example JSON Code Block
                         content += f"\n```json\n{json.dumps(website_data, indent=2)}\n```\n"
 
-                        # Add entry to the README
-                        numbered_entry = f"{entry_title} {entry_link}\n{content}\n**Contributor:** {author}\n"
-                        readme_file.write(f"\n---\n{numbered_entry}\n")
-                        entry_number += 1  # Increment the entry number
+                        # Add entry to the README if the `show` is True or not set
+                        if website_data.get('show', True):
+                            numbered_entry = f"{entry_title} {entry_link}\n{content}\n**Contributor:** {author}\n"
+                            readme_file.write(f"\n---\n{numbered_entry}\n")
+                            entry_number += 1  # Increment the entry number
 
                 # Replace the placeholder with the current date
                 current_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
