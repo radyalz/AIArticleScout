@@ -134,8 +134,15 @@ def update_readme():
                 readme_file.seek(0)
                 readme_file.write(updated_content)
                 readme_file.truncate()
+
+            # Set the output to indicate that new entries were added
+            print("::set-output name=new-entries::true")
+
         except Exception as e:
             print(f"Error writing to {readme_path}: {e}")
+            print("::set-output name=new-entries::false")
+    else:
+        print("::set-output name=new-entries::false")
 
 if __name__ == "__main__":
     update_readme()
