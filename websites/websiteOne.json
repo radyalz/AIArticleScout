@@ -39,5 +39,6 @@
         "your preferences"
     ],
     "Contributor": "radyalz",
-    "show": true
+    "show": true,
+    "example": false
 }
