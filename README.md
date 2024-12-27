@@ -142,25 +142,3 @@ Together, let’s build an incredible resource library for the AI and web resear
 ## 📖 All updates of resource list## 
 
 ---
-### Contributions by Unknown Contributor
-
-- **[## [🌟 Website Name](https://example.com)  ](websites\example.md)**  
-  **Category:** ** different / based on / your preferences  
-  **Tags:** ** #different, #based_on, #your_preferences  
-  **Path:** websites\example.md  
-
-
----
-## #1
-## [🌟 connectedpapers](https://www.connectedpapers.com/search?q=5g)  
-
-**Description:** A brief description of the website.  
-
-![Website Screenshot](relative/path/to/image.png)  
-
-**Category:** AI Research / Journals / Articles  /asdasdasdasd /asdasdasd /asdasdas
-
-**Tags:** #AI, #WebResearch, #Journals  
-
-**Contributor:** Radman alizadeh
-
