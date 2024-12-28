@@ -11,14 +11,24 @@
 #     update_readme(readme_path, websites_path, config_path, images_path, gifs_path)
 
 # update_readme.py
+import os
 from readme_updater import update_readme
 
-# Use paths relative to the root of the repository
-readme_path = './README.md'  # This assumes README.md is at the root
-websites_path = './websites'  # Assuming websites is a folder at the root
-config_path = './scripts/config.json'  # Assuming config.json is at the root
-images_path = './images'  # Assuming images is a folder at the root
-gifs_path = './gifs'  # Assuming gifs is a folder at the root
+readme_path = './README.md'  # Correct relative path
+websites_path = './websites'  # Correct relative path
+config_path = './scripts/config.json'  # Correct relative path
+images_path = './images'  # Correct relative path
+gifs_path = './gifs'  # Correct relative path
 
 if __name__ == "__main__":
-    update_readme(readme_path, websites_path, config_path, images_path, gifs_path)
+    # Call your update_readme function
+    new_entries = update_readme(readme_path, websites_path, config_path, images_path, gifs_path)
+
+    # Set the 'new-entries' environment variable
+    if new_entries:
+        os.environ['new-entries'] = 'true'
+    else:
+        os.environ['new-entries'] = 'false'
+
+    # Optionally print for debugging
+    print(f"new-entries set to {os.environ['new-entries']}")
