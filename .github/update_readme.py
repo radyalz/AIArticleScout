@@ -1,6 +1,7 @@
 import os
 import json
 from datetime import datetime
+import subprocess
 
 # Paths to the necessary files and directories
 readme_path = '../README.md'  # Adjusted path to README.md
