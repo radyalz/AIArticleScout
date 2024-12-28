@@ -129,7 +129,7 @@ def update_readme(readme_path, websites_path, config_path, images_path, gifs_pat
                     readme_file.write(readme_content)
                     readme_file.truncate()
                 # Output the result
-                return changes_made  # Return True or False based on changes made
+                return changes_made  
 
         except Exception as e:
             print(f"Error writing to {readme_path}: {e}")
