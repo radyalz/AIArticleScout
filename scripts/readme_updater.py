@@ -128,7 +128,7 @@ def update_readme(readme_path, websites_path, config_path, images_path, gifs_pat
                     readme_file.seek(0)
                     readme_file.write(readme_content)
                     readme_file.truncate()
-                # Output the result
+                # Output the results
                 return changes_made  
 
         except Exception as e:
