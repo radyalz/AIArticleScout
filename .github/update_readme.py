@@ -83,10 +83,10 @@ def update_readme(example=False, show=False):
             with open(readme_path, 'r+', encoding='utf-8') as readme_file:
                 readme_content = readme_file.read()  # Read current content
                 
-                # Delete everything after "## 📖 All updates of resource list"
-                section_index = readme_content.find("## 📖 All updates of resource list")
-                if section_index != -1:
-                    readme_content = readme_content[:section_index]
+                # # Delete everything after "## 📖 All updates of resource list"
+                # section_index = readme_content.find("## 📖 All updates of resource list")
+                # if section_index != -1:
+                #     readme_content = readme_content[:section_index]
 
                 entry_number = 1  # Initialize the entry numbering
                 for file_path, website_data in new_entries:
