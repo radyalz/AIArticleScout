@@ -25,21 +25,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set new-entries environment variable
-        id: set-new-entries
-        run: echo "new-entries=${{ steps.run_update_readme.outputs.new-entries }}" >> $GITHUB_ENV
-        continue-on-error: true  # In case the script doesn't set the output
-
       - name: Commit changes to README.md
         run: |
           git config user.name "GitHub Actions"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add README.md
           git commit -m "Update README.md with new content"
-        if: env.new-entries == 'true'
+        if: ${{ steps.run_update_readme.outputs.new-entries == 'true' }}
 
       - name: Push changes to remote
         run: git push https://github.com/radyalz/AIArticleScout.git HEAD:main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: env.new-entries == 'true'
+        if: ${{ steps.run_update_readme.outputs.new-entries == 'true' }}

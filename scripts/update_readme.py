@@ -21,14 +21,11 @@ images_path = './images'  # Correct relative path
 gifs_path = './gifs'  # Correct relative path
 
 if __name__ == "__main__":
-    # Call your update_readme function
+    # Call your update_readme function and capture the result (True/False)
     new_entries = update_readme(readme_path, websites_path, config_path, images_path, gifs_path)
 
-    # Set the 'new-entries' environment variable
+    # Output for GitHub Actions to capture
     if new_entries:
-        os.environ['new-entries'] = 'true'
+        print("new-entries=true")
     else:
-        os.environ['new-entries'] = 'false'
-
-    # Optionally print for debugging
-    print(f"new-entries set to {os.environ['new-entries']}")
+        print("new-entries=false")
