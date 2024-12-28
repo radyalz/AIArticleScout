@@ -11,9 +11,8 @@
 #     update_readme(readme_path, websites_path, config_path, images_path, gifs_path)
 
 # update_readme.py
-import os
 from readme_updater import update_readme
-
+import sys
 readme_path = './README.md'  # Correct relative path
 websites_path = './websites'  # Correct relative path
 config_path = './scripts/config.json'  # Correct relative path
@@ -23,9 +22,9 @@ gifs_path = './gifs'  # Correct relative path
 if __name__ == "__main__":
     # Call your update_readme function and capture the result (True/False)
     new_entries = update_readme(readme_path, websites_path, config_path, images_path, gifs_path)
-
-    # Output for GitHub Actions to capture
+    new_entries = True  
+    # After performing actions, output the result
     if new_entries:
-        print("new-entries=true")
+        print("::set-output name=new-entries::true")
     else:
-        print("new-entries=false")
+        print("::set-output name=new-entries::false")

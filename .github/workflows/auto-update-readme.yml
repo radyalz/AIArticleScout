@@ -31,7 +31,7 @@ jobs:
           python scripts/update_readme.py
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+        
       # Step 5: Commit changes to README.md if there were new entries
       - name: Commit changes to README.md
         run: |
