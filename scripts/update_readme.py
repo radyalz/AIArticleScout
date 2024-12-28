@@ -16,7 +16,7 @@ from readme_updater import update_readme
 # Use paths relative to the root of the repository
 readme_path = './README.md'  # This assumes README.md is at the root
 websites_path = './websites'  # Assuming websites is a folder at the root
-config_path = './config.json'  # Assuming config.json is at the root
+config_path = './scripts/config.json'  # Assuming config.json is at the root
 images_path = './images'  # Assuming images is a folder at the root
 gifs_path = './gifs'  # Assuming gifs is a folder at the root
 
