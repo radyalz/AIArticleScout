@@ -31,53 +31,6 @@ git clone https://github.com/your-username/AIArticleScout.git
 📄 Navigate to the `websites` folder and create a new Json file (`resource-name.json`). Use this template:  
 ## 📇 here is the example of a json file
 
-```json
-{
-  "website": "Website Name",
-  "link": "https://example.com",
-  "Description": "A brief description of the website.",
-  "image": "chatgpt.png",
-  "attributes": {
-    "pros": [
-      "pro 1",
-      "pro 2",
-      "pro 3"
-    ],
-    "cons": [
-      "con 1",
-      "con 2"
-    ]
-  },
-  "videos": [
-    {
-      "title": "Click to View Video",
-      "thumbnail": "thumbnail.gif",
-      "link": "https://www.example.com/v/your-video-id",
-      "Description": "A brief description of the video."
-    },
-    {
-      "title": "Click to View Video",
-      "thumbnail": "thumbnail.gif",
-      "link": "https://www.example.com/v/your-video-id",
-      "Description": "A brief description of the video."
-    }
-  ],
-  "Category": [
-    "different",
-    "based on",
-    "your preferences"
-  ],
-  "Tags": [
-    "different",
-    "based on",
-    "your wqewqeqw"
-  ],
-  "Contributor": "radyalz",
-  "show": true,
-  "example": true,
-  "type": "example"
-}
-```
 
 ### 4️⃣ Add an Image or gifs
 for images or gifs just place names in the json file with the correct annotation
@@ -99,34 +52,6 @@ git push origin main
 
 ## 🛠️ Example Entry:
 
-## 1️⃣ 🌐 [Website Name](https://example.com)
-**Description:** 📝 A brief description of the website.
-
-![Website Name](./images/chatgpt.png)
-
-#### 🌟 Pros:
-- ✅ **pro 1:** Add pros as bullet points here
-- ✅ **pro 2:** Add pros as bullet points here
-- ✅ **pro 3:** Add pros as bullet points here
-#### ❌ Cons:
-- 🚫 **con 1:** Add cons as bullet points here
-- 🚫 **con 2:** Add cons as bullet points here
-
-### 🎥 Tutorial Videos
-#### 📹 Click to View Video:
-**Description:** 🎬 A brief description of the video.
-[![Click to View Video](thumbnail.gif)](https://www.example.com/v/your-video-id)
-
-#### 📹 Click to View Video:
-**Description:** 🎬 A brief description of the video.
-[![Click to View Video](thumbnail.gif)](https://www.example.com/v/your-video-id)
-
-
-**🔖 Category:** different, based on, your preferences
-**🏷️ Tags:** different, based on, your wqewqeqw
-**🤝 Contributor:** 🎤 Radman Alizadeh
-
-**Contributor:** Radman alizadeh
 
 ---
 
@@ -142,32 +67,3 @@ Together, let’s build an incredible resource library for the AI and web resear
 ---
 
 ## 📖 All updates of resource list
-
-## 1️⃣ 🌐 [Website one](https://example.com)
-**Description:** 📝 A brief description of the website.
-
-![Website one](./images/chatgpt copy.gif)
-
-#### 🌟 Pros:
-- ✅ **pro 1:** Add pros as bullet points here
-- ✅ **pro 2:** Add pros as bullet points here
-- ✅ **pro 3:** Add pros as bullet points here
-#### ❌ Cons:
-- 🚫 **con 1:** Add cons as bullet points here
-- 🚫 **con 2:** Add cons as bullet points here
-
-### 🎥 Tutorial Videos
-#### 📹 Click to View Video:
-**Description:** 🎬 A brief description of the video.
-[![Click to View Video](thumbnail.gif)](https://www.example.com/v/your-video-id)
-
-#### 📹 Click to View Video:
-**Description:** 🎬 A brief description of the video.
-[![Click to View Video](thumbnail.gif)](https://www.example.com/v/your-video-id)
-
-
-**🔖 Category:** different, based on, your preferences
-**🏷️ Tags:** different, based on, your preferences
-**🤝 Contributor:** 🎤 Radman Alizadeh
-
-**Contributor:** Radman alizadeh
