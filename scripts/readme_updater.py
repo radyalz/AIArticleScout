@@ -11,7 +11,7 @@ def update_readme(readme_path, websites_path, config_path, images_path, gifs_pat
     config = get_config(config_path)
     readme_content = get_readme_content(readme_path)  # Read current content
     new_entries = get_new_entries(websites_path, readme_content)
-
+    print(f"New Entries: {new_entries}") 
     # Find the line numbers (or approximate)
     lines = readme_content.splitlines()
     # Section line numbers
@@ -115,7 +115,19 @@ def update_readme(readme_path, websites_path, config_path, images_path, gifs_pat
                     readme_file.seek(0)
                     readme_file.write(readme_content)
                     readme_file.truncate()
-
+                with open(readme_path, 'r+', encoding='utf-8') as readme_file:
+                    # Read content and make modifications
+                    readme_content = readme_file.read()
+                    # Perform modifications as needed...
+                    
+                    # Debug: Print changes before writing back
+                    print("Changes made to README.md:")
+                    print("\n".join(lines))  # or just print the modified lines
+                    
+                    # After modification, write back
+                    readme_file.seek(0)
+                    readme_file.write(readme_content)
+                    readme_file.truncate()
                 # Output the result
                 return changes_made  # Return True or False based on changes made
 

@@ -8,18 +8,23 @@ on:
 jobs:
   update-readme:
     runs-on: ubuntu-latest
+    
     steps:
+      # Step 1: Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      # Step 2: Set up Python environment
       - name: Set up Python environment
         uses: actions/setup-python@v2
         with:
           python-version: '3.x'
 
+      # Step 3: Install dependencies
       - name: Install dependencies
         run: pip install -r scripts/requirements.txt
 
+      # Step 4: Run update_readme.py script and capture the result (new-entries=true or false)
       - name: Run update_readme.py script
         id: run_update_readme
         run: |
@@ -27,6 +32,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      # Step 5: Commit changes to README.md if there were new entries
       - name: Commit changes to README.md
         run: |
           git config user.name "GitHub Actions"
@@ -35,7 +41,9 @@ jobs:
           git commit -m "Update README.md with new content"
         if: ${{ steps.run_update_readme.outputs.new-entries == 'true' }}
 
-      - name: Push changes to remote repository
-        run: |
-          git push
+      # Step 6: Push changes to remote if new entries were added
+      - name: Push changes to remote
+        run: git push https://github.com/radyalz/AIArticleScout.git HEAD:main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: ${{ steps.run_update_readme.outputs.new-entries == 'true' }}
