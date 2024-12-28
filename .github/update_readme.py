@@ -74,7 +74,7 @@ def format_contributors(website_data, config):
             contributors = contributor_value
     return contributors or 'Anonymous'
 
-def update_readme():
+def update_readme(example=False, show=False):
     config = get_config()
     new_entries = get_new_entries()
 
@@ -140,8 +140,9 @@ def update_readme():
                         content += f"**🏷️ Tags:** {', '.join(website_data.get('Tags', []))}\n"
                         content += f"**🤝 Contributor:** 🎤 {contributors}\n"
 
-                        # Full Example JSON Code Block
-                        content += f"\n```json\n{json.dumps(website_data, indent=2)}\n```\n"
+                        # Add JSON Code Block for example=True
+                        if example:
+                            content += f"\n```json\n{json.dumps(website_data, indent=2)}\n```\n"
 
                         # Add entry to the README if the `show` is True or not set
                         if website_data.get('show', True):
@@ -168,4 +169,4 @@ def update_readme():
         print("::set-output name=new-entries::false")
 
 if __name__ == "__main__":
-    update_readme()
+    update_readme(example=True, show=False)
