@@ -117,13 +117,9 @@ def update_readme(readme_path, websites_path, config_path, images_path, gifs_pat
                     readme_file.truncate()
 
                 # Output the result
-                if changes_made:
-                    print("new-entries=true")
-                else:
-                    print("new-entries=false")
+                return changes_made  # Return True or False based on changes made
 
         except Exception as e:
             print(f"Error writing to {readme_path}: {e}")
-            print("new-entries=false")
-    else:
-        print("new-entries=false")
+            return False
+    return False
