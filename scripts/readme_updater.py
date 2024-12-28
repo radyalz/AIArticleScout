@@ -11,7 +11,7 @@ def update_readme(readme_path, websites_path, config_path, images_path, gifs_pat
     config = get_config(config_path)
     readme_content = get_readme_content(readme_path)  # Read current content
     new_entries = get_new_entries(websites_path, readme_content)
-
+    entries_added = False  # Mark that entries have been added
     # Find the line numbers (or approximate)
     lines = readme_content.splitlines()
     # Section line numbers
@@ -24,7 +24,6 @@ def update_readme(readme_path, websites_path, config_path, images_path, gifs_pat
     lines = lines[:section_line + 1]
     # Remove content between "## 🛠️ Example Entry:" and ## 📜 License  
     lines = lines[:example_line + 1] + lines[license_line - 4:]
-    
     if new_entries:
         try:
             with open(readme_path, 'r+', encoding='utf-8') as readme_file:
@@ -34,12 +33,10 @@ def update_readme(readme_path, websites_path, config_path, images_path, gifs_pat
                 example_number = 1
                 example_entries_content = ""  # To store formatted example entries
                 regular_entries_content = ""  # To store regular entries
-
                 # Find the last non-empty line to insert new content
                 last_non_empty_line = len(lines) - 1
                 while last_non_empty_line >= 0 and not lines[last_non_empty_line].strip():
                     last_non_empty_line -= 1
-
                 for file_path, website_data in new_entries:
                     if file_path not in readme_content:
                         author = get_commit_author(file_path)
@@ -61,29 +58,24 @@ def update_readme(readme_path, websites_path, config_path, images_path, gifs_pat
                         # gif_path = os.path.join(gifs_path, gif_filename)
                         # if os.path.exists(gif_path):
                         #     content += f"![{website_data['website']}]({gif_path})\n\n"
-
                         if website_data.get("attributes", {}).get("pros"):
                             content += "#### 🌟 Pros:\n"
                             for pro in website_data["attributes"]["pros"]:
                                 content += f"- ✅ **{pro}:** Add pros as bullet points here\n"
-
                         if website_data.get("attributes", {}).get("cons"):
                             content += "#### ❌ Cons:\n"
                             for con in website_data["attributes"]["cons"]:
                                 content += f"- 🚫 **{con}:** Add cons as bullet points here\n"
-
                         content += "\n### 🎥 Tutorial Videos\n"
                         for video in website_data.get("videos", []):
                             content += f"#### 📹 {video['title']}:\n"
                             content += f"**Description:** 🎬 {video['Description']}\n"
                             content += f"[![Click to View Video]({video['thumbnail']})]({video['link']})\n"
                             content += "\n"
-                        
                         content += f"\n**🔖 Category:** {', '.join(website_data.get('Category', []))}\n"
                         content += f"**🏷️ Tags:** {', '.join(website_data.get('Tags', []))}\n"
                         content += f"**🤝 Contributor:** 🎤 {contributors}\n"
                         print(f"why2: {website_data['type']}")
-                        
                         if website_data['type'] == 'example':
                             # Format example entries for the example section
                             example_title = f"## {example_number}️⃣"
@@ -112,14 +104,16 @@ def update_readme(readme_path, websites_path, config_path, images_path, gifs_pat
                 readme_file.seek(0)
                 readme_file.write(readme_content)
                 readme_file.truncate()
-
             if new_entries:
                 print("new-entries=true")
+                return True 
             else:
                 print("new-entries=false")
-
+                return False
         except Exception as e:
             print(f"Error writing to {readme_path}: {e}")
             print("new-entries=false")
+            return False
     else:
         print("new-entries=false")
+        return False
