@@ -1,5 +1,4 @@
 import os
-import subprocess
 import json
 from datetime import datetime
 
@@ -39,8 +38,7 @@ def get_new_entries():
                         
                         # Check if the entry should be included (show is true or not set)
                         if website_data.get('show', True):
-                            
-                            # Check if the entry is not already in README
+                             # Check if the entry is not already in README
                             if file_path not in readme_content:
                                 new_entries.append((file_path, website_data))
                 except Exception as e:
@@ -62,6 +60,19 @@ def get_commit_author(file_path):
         print(f"Error getting commit author for {file_path}: {e}")
         return "Anonymous"
 
+def format_contributors(website_data, config):
+    """Format contributors from the config.json data."""
+    contributors_key = website_data.get('Contributor')
+    contributors = website_data.get('Contributor', 'Anonymous')
+
+    if contributors_key in config.get('contributors', {}):
+        contributor_value = config['contributors'][contributors_key]
+        if isinstance(contributor_value, list):
+            contributors = ', '.join(contributor_value)
+        else:
+            contributors = contributor_value
+    return contributors or 'Anonymous'
+
 def update_readme():
     config = get_config()
     new_entries = get_new_entries()
@@ -70,11 +81,18 @@ def update_readme():
         try:
             with open(readme_path, 'r+', encoding='utf-8') as readme_file:
                 readme_content = readme_file.read()  # Read current content
+                
+                # Delete everything after "## 📖 All updates of resource list"
+                section_index = readme_content.find("## 📖 All updates of resource list")
+                if section_index != -1:
+                    readme_content = readme_content[:section_index]
+
                 entry_number = 1  # Initialize the entry numbering
                 for file_path, website_data in new_entries:
                     # Ensure the entry does not already exist in the README
                     if file_path not in readme_content:
                         author = get_commit_author(file_path)
+                        contributors = format_contributors(website_data, config)  # Format contributors
 
                         # Prepare entry title
                         entry_title = f"## {entry_number}️⃣"
@@ -119,7 +137,7 @@ def update_readme():
                         # Add Category and Tags
                         content += f"\n**🔖 Category:** {', '.join(website_data.get('Category', []))}\n"
                         content += f"**🏷️ Tags:** {', '.join(website_data.get('Tags', []))}\n"
-                        content += f"**🤝 Contributor:** 🎤 {config.get('contributors', {}).get(website_data.get('Contributor'), website_data.get('Contributor'))}\n"
+                        content += f"**🤝 Contributor:** 🎤 {contributors}\n"
 
                         # Full Example JSON Code Block
                         content += f"\n```json\n{json.dumps(website_data, indent=2)}\n```\n"
@@ -127,15 +145,16 @@ def update_readme():
                         # Add entry to the README if the `show` is True or not set
                         if website_data.get('show', True):
                             numbered_entry = f"{entry_title} {entry_link}\n{content}\n**Contributor:** {author}\n"
-                            readme_file.write(f"\n---\n{numbered_entry}\n")
+                            readme_content += f"\n---\n{numbered_entry}\n"
                             entry_number += 1  # Increment the entry number
 
                 # Replace the placeholder with the current date
                 current_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                readme_file.seek(0)  # Move to the start of the file
-                updated_content = readme_file.read().replace("{{ update_date }}", f"Last Updated: {current_date}")
+                readme_content = readme_content.replace("{{ update_date }}", f"Last Updated: {current_date}")
+
+                # Write the updated content back to the README
                 readme_file.seek(0)
-                readme_file.write(updated_content)
+                readme_file.write(readme_content)
                 readme_file.truncate()
 
             # Set the output to indicate that new entries were added
